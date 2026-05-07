@@ -3,127 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JUNPEI TAKATSU — Composite Director / Concept Compositor</title>
+<title>JUNPEI TAKATSU — Animation Composite Director</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
-    --border: rgba(255,255,255,0.08); --border-hover: rgba(255,255,255,0.18);
-    --text: #f0f0f0; --text-muted: #aaa; --text-dim: #777; --accent: #c8a96e;
+    --teal: #1a9ba1;
+    --teal-dark: #137a7f;
+    --teal-light: #e8f6f7;
+    --teal-mid: #b2dfe1;
+    --white: #ffffff;
+    --off-white: #f8fafa;
+    --text: #1a2e2f;
+    --text-muted: #5a7a7c;
+    --text-dim: #9ab8ba;
+    --border: rgba(26,155,161,0.12);
+    --border-hover: rgba(26,155,161,0.3);
     --font-display: 'Barlow Condensed', sans-serif;
     --font-body: 'Barlow', sans-serif;
     --font-jp: 'Noto Sans JP', sans-serif;
   }
+
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7; overflow-x: hidden; }
+  body { background: var(--white); color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 64px; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.2em; color: var(--text); text-decoration: none; text-transform: uppercase; }
-  .nav-logo span { color: var(--accent); font-weight: 600; }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 60px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em; color: var(--teal); text-decoration: none; text-transform: uppercase; }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal); }
   .nav-social { display: flex; gap: 1.2rem; align-items: center; }
-  .nav-social a { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-  .nav-social a:hover { color: var(--text); }
+  .nav-social a { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+  .nav-social a:hover { color: var(--teal); }
 
-  #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 64px 2rem 0; position: relative; overflow: hidden; }
-  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%); }
-  .hero-eyebrow { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
-  .hero-title { font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 600; letter-spacing: 0.05em; line-height: 1; margin-bottom: 0.5rem; }
-  .hero-title .bold { font-weight: 600; }
-  .hero-subtitle { font-family: var(--font-jp); font-size: 0.95rem; color: var(--text-muted); letter-spacing: 0.15em; margin-bottom: 2.5rem; }
-  .hero-desc { font-family: var(--font-jp); font-size: 0.9rem; color: var(--text-muted); max-width: 480px; line-height: 1.8; margin-bottom: 3rem; }
-  .hero-cta { display: flex; gap: 1rem; justify-content: center; }
-  .scroll-indicator { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-dim); font-family: var(--font-display); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; }
-  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-dim), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    background: var(--teal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 60px 2rem 0;
+    position: relative; overflow: hidden;
+  }
+
+  /* アイコンパターン背景 */
+  .hero-pattern {
+    position: absolute; inset: 0;
+    opacity: 0.12;
+    overflow: hidden;
+  }
+
+  .hero-pattern svg { width: 100%; height: 100%; }
+
+  .hero-content { position: relative; z-index: 2; display: flex; align-items: center; gap: 5rem; text-align: left; }
+  .hero-content-text { flex: 1; }
+
+  .hero-avatar {
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.5);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: transparent;
+  }
+
+  .hero-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 0.95;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title .thin { font-weight: 700; letter-spacing: 0.03em; }
+
+  .hero-subtitle {
+    font-family: var(--font-jp);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.1em;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta { display: flex; gap: 1rem; justify-content: flex-start; }
+
+  .btn { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.8rem 2rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .btn-white { background: white; color: var(--teal); font-weight: 700; }
+  .btn-white:hover { background: var(--teal-light); }
+  .btn-outline-white { border: 1.5px solid rgba(255,255,255,0.5); color: white; }
+  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+  .btn-teal { background: var(--teal); color: white; font-weight: 600; }
+  .btn-teal:hover { background: var(--teal-dark); }
+  .btn-outline-teal { border: 1.5px solid var(--border-hover); color: var(--teal); }
+  .btn-outline-teal:hover { border-color: var(--teal); background: var(--teal-light); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+  }
+  .hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); animation: scrollPulse 2s ease-in-out infinite; }
   @keyframes scrollPulse { 0%,100%{opacity:0.3}50%{opacity:1} }
 
-  .btn { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.75rem 2rem; text-decoration: none; transition: all 0.2s; display: inline-block; cursor: pointer; }
-  .btn-primary { background: var(--accent); color: #0a0a0a; font-weight: 600; }
-  .btn-primary:hover { background: #d4b87a; }
-  .btn-secondary { border: 1px solid var(--border-hover); color: var(--text); background: transparent; }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
+  /* SECTIONS */
   section { padding: 7rem 2rem; }
   .container { max-width: 1100px; margin: 0 auto; }
-  .section-label { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem; }
-  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent); opacity: 0.5; }
-  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 3rem; }
-  .section-title .bold { font-weight: 600; }
+  .section-label { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1rem; }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1.5px; background: var(--teal); opacity: 0.4; }
+  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; letter-spacing: 0.05em; margin-bottom: 3rem; color: var(--text); }
 
-  #featured { background: var(--bg2); border-top: 1px solid var(--border); }
+  /* FEATURED */
+  #featured { background: var(--off-white); border-top: 1px solid var(--border); }
   .featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-  .featured-card { background: var(--bg3); border: 1px solid var(--border); overflow: hidden; transition: border-color 0.2s; }
-  .featured-card:hover { border-color: var(--border-hover); }
-  .featured-embed { position: relative; padding-bottom: 56.25%; background: #000; }
+  .featured-card { background: white; border: 1px solid var(--border); overflow: hidden; transition: all 0.2s; }
+  .featured-card:hover { border-color: var(--teal-mid); box-shadow: 0 4px 20px rgba(26,155,161,0.08); transform: translateY(-2px); }
+  .featured-embed { position: relative; padding-bottom: 56.25%; background: var(--teal-light); }
   .featured-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-  .featured-meta { padding: 1rem 1.2rem; }
-  .featured-meta-title { font-family: var(--font-jp); font-size: 0.95rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
-  .featured-meta-role { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .featured-meta { padding: 1rem 1.2rem; border-top: 2px solid var(--teal-light); }
+  .featured-meta-title { font-family: var(--font-jp); font-size: 0.9rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
+  .featured-meta-role { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
 
-  #profile { background: var(--bg); border-top: 1px solid var(--border); }
-  .profile-grid { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 4rem; align-items: start; }
-  .profile-avatar { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-  .profile-avatar img { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; object-position: center top; border: 2px solid var(--border-hover); filter: grayscale(20%); transition: filter 0.3s; }
-  .profile-avatar img:hover { filter: grayscale(0%); }
-  .profile-main .name { font-family: var(--font-display); font-size: 2.5rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
-  .profile-main .name-jp { font-family: var(--font-jp); font-size: 1rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-  .profile-main .tagline { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; }
-  .profile-text { font-family: var(--font-jp); font-size: 0.95rem; color: var(--text-muted); line-height: 2; margin-bottom: 1.5rem; }
-  .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-  .skill-tag { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.8rem; border: 1px solid var(--border-hover); color: var(--text-muted); }
-  .profile-history .history-title { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  /* PROFILE */
+  #profile { background: white; border-top: 1px solid var(--border); }
+  .profile-grid { display: grid; grid-template-columns: 220px 1fr 1fr; gap: 4rem; align-items: start; }
+  .profile-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .profile-avatar-wrap img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; object-position: center top; border: 3px solid var(--teal-mid); transition: border-color 0.2s; background: transparent; }
+  .profile-avatar-wrap img:hover { border-color: var(--teal); }
+
+  .profile-name { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; letter-spacing: 0.05em; color: var(--text); margin-bottom: 0.2rem; }
+  .profile-name-jp { font-family: var(--font-jp); font-size: 1rem; color: var(--text-muted); margin-bottom: 1rem; }
+  .profile-tagline { font-family: var(--font-display); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1.5px solid var(--border); }
+  .profile-text { font-family: var(--font-jp); font-size: 0.88rem; color: var(--text-muted); line-height: 2; margin-bottom: 1.5rem; }
+  .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .skill-tag { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.8rem; border: 1px solid var(--border-hover); color: var(--teal); background: var(--teal-light); }
+
+  .history-title { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; }
   .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
-  .timeline-item { display: grid; grid-template-columns: 60px 1fr; gap: 1rem; align-items: start; }
-  .timeline-year { font-family: var(--font-display); font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.05em; padding-top: 0.1rem; }
-  .timeline-content { border-left: 1px solid var(--border-hover); padding-left: 1.2rem; }
-  .timeline-content p { font-family: var(--font-jp); font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; }
+  .timeline-item { display: grid; grid-template-columns: 60px 1fr; gap: 1rem; }
+  .timeline-year { font-family: var(--font-display); font-size: 0.72rem; color: var(--teal); letter-spacing: 0.05em; padding-top: 0.1rem; font-weight: 600; }
+  .timeline-content { border-left: 2px solid var(--teal-light); padding-left: 1.2rem; }
+  .timeline-content p { font-family: var(--font-jp); font-size: 0.83rem; color: var(--text-muted); line-height: 1.9; }
 
-  #contact { background: var(--bg2); border-top: 1px solid var(--border); text-align: center; }
-  .contact-text { font-family: var(--font-jp); font-size: 1rem; color: var(--text-muted); max-width: 680px; margin: 0 auto 2.5rem; line-height: 2; white-space: nowrap; }
-  .contact-email { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; color: var(--text); margin-bottom: 3rem; display: block; }
+  /* CONTACT */
+  #contact { background: var(--teal); text-align: center; }
+  .contact-label { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; justify-content: center; }
+  .contact-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; color: white; margin-bottom: 2rem; letter-spacing: 0.05em; }
+  .contact-text { font-family: var(--font-jp); font-size: 0.9rem; color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 2rem; line-height: 2; }
+  .contact-email { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; color: white; margin-bottom: 2.5rem; display: block; }
 
-  footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2rem; display: flex; align-items: center; justify-content: space-between; }
-  .footer-logo { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
-  .footer-copy { font-family: var(--font-display); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.1em; }
+  footer { background: var(--teal-dark); padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .footer-copy { font-family: var(--font-display); font-size: 0.65rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
 
-
-
-  .featured-thumbnail { position: relative; padding-bottom: 56.25%; background: var(--bg2); overflow: hidden; }
-  .featured-thumbnail img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-  .featured-card:hover .featured-thumbnail img { transform: scale(1.03); }
-  .featured-thumbnail-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.1em; }
-  .ext-badge { display: inline-block; font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); background: var(--bg2); border: 1px solid var(--border); padding: 0.15rem 0.5rem; margin-left: 0.5rem; vertical-align: middle; }
-  .page-top-btn { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; width: 48px; height: 48px; background: var(--bg3); border: 1px solid var(--border-hover); color: var(--text-muted); font-family: var(--font-display); font-size: 1.2rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; }
-  .page-top-btn.visible { opacity: 1; pointer-events: auto; }
-  .page-top-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--bg2); }
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
   .loading-msg { color: var(--text-dim); font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.1em; padding: 2rem 0; }
-  .error-msg { color: #c87070; font-family: var(--font-jp); font-size: 0.85rem; padding: 2rem 0; line-height: 1.8; }
+  .error-msg { color: #e05555; font-size: 0.85rem; padding: 2rem 0; }
+
+  .page-top-btn { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; width: 48px; height: 48px; background: var(--teal); border: none; color: white; font-family: var(--font-display); font-size: 1.2rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; border-radius: 50%; }
+  .page-top-btn.visible { opacity: 1; pointer-events: auto; }
+  .page-top-btn:hover { background: var(--teal-dark); }
 
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
     .nav-social { display: none; }
     .nav-links { gap: 1.5rem; }
     section { padding: 5rem 1.5rem; }
-    .profile-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .profile-avatar img { width: 120px; height: 120px; }
+    .profile-grid { grid-template-columns: 1fr; gap: 3rem; }
     .featured-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">JUNPEI <span>TAKATSU</span></a>
+  <a href="index_teal.html" class="nav-logo">Junpei Takatsu</a>
   <ul class="nav-links">
-    <li><a href="index.html">Top</a></li>
+    <li><a href="index_teal.html">Top</a></li>
     <li><a href="works.html">Works</a></li>
     <li><a href="#profile">Profile</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -136,21 +224,95 @@
 </nav>
 
 <section id="hero">
-  <div class="hero-grid"></div>
-  <p class="hero-eyebrow">Composite Director / Concept Compositor</p>
-  <h1 class="hero-title">JUNPEI <span class="bold">TAKATSU</span></h1>
-  <p class="hero-subtitle">高津 純平 — アニメーション撮影監督 / コンセプトコンポジット</p>
-  <p class="hero-desc">
-    フリーランスのアニメ撮影監督。<br>
-    スペシャルな絵作りをモットーに、<br>
-    TVシリーズ・劇場アニメ・MVの撮影・コンポジットを手掛ける。
-  </p>
-  <div class="hero-cta">
-    <a href="works.html" class="btn btn-primary">View Works</a>
-    <a href="#contact" class="btn btn-secondary">Contact</a>
+  <div class="hero-pattern">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="ae" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="white" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Helvetica">Ae</text></symbol>
+        <symbol id="ps" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="white" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Helvetica">Ps</text></symbol>
+        <symbol id="cursor" viewBox="0 0 24 24"><path d="M4 4 L4 18 L8 14 L11 20 L13 19 L10 13 L15 13 Z" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+        <symbol id="layers" viewBox="0 0 24 24"><path d="M12 2 L22 7 L12 12 L2 7 Z" fill="none" stroke="white" stroke-width="1.5"/><path d="M2 12 L12 17 L22 12" fill="none" stroke="white" stroke-width="1.5"/><path d="M2 17 L12 22 L22 17" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+        <symbol id="film" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="white" stroke-width="1.5"/><rect x="2" y="7" width="3" height="2" fill="white"/><rect x="2" y="11" width="3" height="2" fill="white"/><rect x="2" y="15" width="3" height="2" fill="white"/><rect x="19" y="7" width="3" height="2" fill="white"/><rect x="19" y="11" width="3" height="2" fill="white"/><rect x="19" y="15" width="3" height="2" fill="white"/></symbol>
+        <symbol id="star" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+        <symbol id="scissors" viewBox="0 0 24 24"><circle cx="6" cy="7" r="3" fill="none" stroke="white" stroke-width="1.5"/><circle cx="6" cy="17" r="3" fill="none" stroke="white" stroke-width="1.5"/><line x1="8.5" y1="8.5" x2="20" y2="20" stroke="white" stroke-width="1.5"/><line x1="8.5" y1="15.5" x2="20" y2="4" stroke="white" stroke-width="1.5"/></symbol>
+      </defs>
+      <use href="#ae" x="30" y="20" width="36" height="36"/>
+      <use href="#ps" x="110" y="50" width="28" height="28"/>
+      <use href="#film" x="180" y="15" width="32" height="32"/>
+      <use href="#cursor" x="260" y="45" width="24" height="24"/>
+      <use href="#layers" x="330" y="20" width="30" height="30"/>
+      <use href="#ae" x="420" y="55" width="24" height="24"/>
+      <use href="#star" x="500" y="18" width="22" height="22"/>
+      <use href="#ps" x="570" y="48" width="36" height="36"/>
+      <use href="#scissors" x="660" y="20" width="26" height="26"/>
+      <use href="#film" x="740" y="50" width="28" height="28"/>
+      <use href="#cursor" x="820" y="15" width="22" height="22"/>
+      <use href="#ae" x="900" y="45" width="32" height="32"/>
+      <use href="#layers" x="980" y="20" width="28" height="28"/>
+      <use href="#star" x="1060" y="50" width="24" height="24"/>
+      <use href="#ps" x="1130" y="15" width="30" height="30"/>
+      <use href="#film" x="20" y="120" width="28" height="28"/>
+      <use href="#star" x="90" y="150" width="32" height="32"/>
+      <use href="#ae" x="160" y="110" width="26" height="26"/>
+      <use href="#cursor" x="240" y="140" width="30" height="30"/>
+      <use href="#ps" x="320" y="115" width="22" height="22"/>
+      <use href="#scissors" x="400" y="145" width="28" height="28"/>
+      <use href="#layers" x="480" y="110" width="32" height="32"/>
+      <use href="#film" x="560" y="140" width="24" height="24"/>
+      <use href="#ae" x="640" y="115" width="30" height="30"/>
+      <use href="#star" x="720" y="145" width="26" height="26"/>
+      <use href="#cursor" x="800" y="110" width="22" height="22"/>
+      <use href="#ps" x="880" y="140" width="34" height="34"/>
+      <use href="#layers" x="960" y="115" width="28" height="28"/>
+      <use href="#ae" x="1040" y="145" width="24" height="24"/>
+      <use href="#film" x="1120" y="110" width="30" height="30"/>
+      <use href="#scissors" x="50" y="560" width="28" height="28"/>
+      <use href="#ae" x="130" y="590" width="32" height="32"/>
+      <use href="#ps" x="210" y="555" width="26" height="26"/>
+      <use href="#star" x="290" y="585" width="30" height="30"/>
+      <use href="#layers" x="370" y="560" width="24" height="24"/>
+      <use href="#cursor" x="450" y="590" width="28" height="28"/>
+      <use href="#film" x="530" y="555" width="32" height="32"/>
+      <use href="#ae" x="620" y="585" width="22" height="22"/>
+      <use href="#scissors" x="700" y="558" width="26" height="26"/>
+      <use href="#ps" x="780" y="588" width="30" height="30"/>
+      <use href="#star" x="860" y="558" width="28" height="28"/>
+      <use href="#layers" x="940" y="585" width="24" height="24"/>
+      <use href="#ae" x="1020" y="555" width="32" height="32"/>
+      <use href="#film" x="1100" y="585" width="26" height="26"/>
+      <use href="#cursor" x="40" y="640" width="22" height="22"/>
+      <use href="#ps" x="120" y="655" width="28" height="28"/>
+      <use href="#star" x="200" y="635" width="24" height="24"/>
+      <use href="#ae" x="290" y="650" width="30" height="30"/>
+      <use href="#layers" x="380" y="638" width="22" height="22"/>
+      <use href="#scissors" x="460" y="652" width="26" height="26"/>
+      <use href="#film" x="550" y="636" width="28" height="28"/>
+      <use href="#cursor" x="640" y="650" width="24" height="24"/>
+      <use href="#ps" x="720" y="635" width="32" height="32"/>
+      <use href="#ae" x="810" y="650" width="22" height="22"/>
+      <use href="#star" x="890" y="636" width="28" height="28"/>
+      <use href="#layers" x="970" y="652" width="26" height="26"/>
+      <use href="#film" x="1060" y="636" width="30" height="30"/>
+      <use href="#scissors" x="1140" y="648" width="24" height="24"/>
+    </svg>
   </div>
-  <div class="scroll-indicator">
-    <div class="scroll-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-avatar">
+      <img src="https://raw.githubusercontent.com/taka2composite/taka2composite.github.io/main/Profile%2BA_Resize.png" alt="Junpei Takatsu">
+    </div>
+    <div class="hero-content-text">
+      <p class="hero-eyebrow">Composite Director / Concept Compositor</p>
+      <h1 class="hero-title">JUNPEI <span class="thin">TAKATSU</span></h1>
+      <p class="hero-subtitle">高津 純平 — アニメーション撮影監督</p>
+      <div class="hero-cta">
+        <a href="works.html" class="btn btn-white">View Works</a>
+        <a href="#contact" class="btn btn-outline-white">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
     <span>Scroll</span>
   </div>
 </section>
@@ -158,12 +320,12 @@
 <section id="featured">
   <div class="container">
     <p class="section-label">Featured</p>
-    <h2 class="section-title">Featured <span class="bold">Videos</span></h2>
+    <h2 class="section-title">Featured Videos</h2>
     <div class="featured-grid" id="featuredGrid">
       <p class="loading-msg">Loading...</p>
     </div>
-    <div style="text-align:center; margin-top:2.5rem;">
-      <a href="works.html" class="btn btn-secondary">View All Works →</a>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="works.html" class="btn btn-outline-teal">View All Works →</a>
     </div>
   </div>
 </section>
@@ -171,15 +333,15 @@
 <section id="profile">
   <div class="container">
     <p class="section-label">Profile</p>
-    <h2 class="section-title">About <span class="bold">Me</span></h2>
+    <h2 class="section-title">About Me</h2>
     <div class="profile-grid">
-      <div class="profile-avatar fade-in">
+      <div class="profile-avatar-wrap fade-in">
         <img src="https://raw.githubusercontent.com/taka2composite/taka2composite.github.io/main/Profile%2BA_Resize.png" alt="Junpei Takatsu">
       </div>
-      <div class="profile-main fade-in">
-        <p class="name">JUNPEI TAKATSU</p>
-        <p class="name-jp">高津 純平</p>
-        <p class="tagline">Composite Director / Concept Compositor</p>
+      <div class="fade-in">
+        <p class="profile-name">JUNPEI TAKATSU</p>
+        <p class="profile-name-jp">高津 純平</p>
+        <p class="profile-tagline">Composite Director / Concept Compositor</p>
         <p class="profile-text">
           東京都在住。フリーランスでアニメの撮影（コンポジット）を担当しています。<br>
           スペシャルな絵作りをモットーに、TVシリーズ・劇場アニメ・MVなど幅広い作品に携わっています。<br><br>
@@ -194,7 +356,7 @@
           <span class="skill-tag">Animation Photography</span>
         </div>
       </div>
-      <div class="profile-history fade-in">
+      <div class="fade-in">
         <p class="history-title">Career History</p>
         <div class="timeline">
           <div class="timeline-item">
@@ -229,28 +391,27 @@
 
 <section id="contact">
   <div class="container">
-    <p class="section-label" style="justify-content:center;">Contact</p>
-    <h2 class="section-title" style="text-align:center;">Get in <span class="bold">Touch</span></h2>
+    <p class="section-label contact-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Contact</p>
+    <h2 class="contact-title">Get in Touch</h2>
     <p class="contact-text">
       撮影・コンポジットに関するご依頼・ご相談はお気軽にご連絡ください。<br>
       TV・劇場・MV・単発・版権などお仕事随時募集しています。
     </p>
     <span class="contact-email">jnptaka2[at]gmail.com</span>
     <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-      <a href="https://note.com/taka2composite" target="_blank" class="btn btn-primary">Note</a>
-      <a href="https://twitter.com/J_Taka2" target="_blank" class="btn btn-secondary">Twitter / X</a>
-      <a href="https://www.facebook.com/junpei.takatsu" target="_blank" class="btn btn-secondary">Facebook</a>
+      <a href="https://note.com/taka2composite" target="_blank" class="btn btn-white">Note</a>
+      <a href="https://twitter.com/J_Taka2" target="_blank" class="btn btn-outline-white">Twitter / X</a>
+      <a href="https://www.facebook.com/junpei.takatsu" target="_blank" class="btn btn-outline-white">Facebook</a>
     </div>
   </div>
 </section>
 
-<div style="text-align:center; padding:2rem; border-top:1px solid var(--border); background:var(--bg);">
-  <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="font-family:var(--font-display);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.75rem 2rem;border:1px solid var(--border-hover);background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border-hover)';this.style.color='var(--text-muted)'">↑ Page Top</button>
-</div>
 <footer>
-  <span class="footer-logo">JUNPEI TAKATSU</span>
+  <span class="footer-logo">Junpei Takatsu</span>
   <span class="footer-copy">&copy; Junpei Takatsu. All rights reserved. / taka2composite</span>
 </footer>
+
+<button class="page-top-btn" id="pageTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
   const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTur1uP4etEukILyzdq3QsUZ6_WG8qj0uWqOFBteQavAEkImRhCeaeNkf0VwdlESRTt8hQ5Qz-ZxnH/pub?gid=0&single=true&output=csv';
@@ -297,69 +458,52 @@
 
       const featured = works.filter(w => (w.youtube_url || '').trim() && (w.featured || '').toUpperCase() === 'TRUE');
       const el = document.getElementById('featuredGrid');
+
       if (!featured.length) {
         el.innerHTML = '<p class="error-msg">featuredがTRUEの動画がありません。</p>';
         return;
       }
+
       el.innerHTML = featured.map(w => {
         const url = (w.youtube_url || '').trim();
         const thumbnailUrl = (w.thumbnail_url || '').trim();
         const youtubeId = getYoutubeId(url);
-        const hasExternalUrl = url && !youtubeId;
 
         if (thumbnailUrl) {
           const inner = `
-            <div class="featured-thumbnail">
-              <img src="${thumbnailUrl}" alt="${w.title || ''}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-              <div class="featured-thumbnail-fallback" style="display:none;">NO IMAGE</div>
+            <div style="position:relative;padding-bottom:56.25%;background:var(--teal-light);">
+              <img src="${thumbnailUrl}" alt="${w.title||''}" loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
             </div>
             <div class="featured-meta">
-              <p class="featured-meta-title">${w.title || ''}${url ? ' <span class="ext-badge">↗</span>' : ''}</p>
-              <p class="featured-meta-role">${w.role || ''}</p>
+              <p class="featured-meta-title">${w.title||''}</p>
+              <p class="featured-meta-role">${w.role||''}</p>
             </div>`;
-          if (url) {
-            return `<a href="${url}" target="_blank" rel="noopener" class="featured-card" style="text-decoration:none;display:block;">${inner}</a>`;
-          } else {
-            return `<div class="featured-card fade-in">${inner}</div>`;
-          }
+          return url
+            ? `<a href="${url}" target="_blank" rel="noopener" class="featured-card fade-in" style="text-decoration:none;display:block;">${inner}</a>`
+            : `<div class="featured-card fade-in">${inner}</div>`;
         } else if (youtubeId) {
           return `<div class="featured-card fade-in">
             <div class="featured-embed"><iframe src="https://www.youtube.com/embed/${youtubeId}" allowfullscreen loading="lazy"></iframe></div>
             <div class="featured-meta">
-              <p class="featured-meta-title">${w.title || ''}</p>
-              <p class="featured-meta-role">${w.role || ''}</p>
+              <p class="featured-meta-title">${w.title||''}</p>
+              <p class="featured-meta-role">${w.role||''}</p>
             </div>
           </div>`;
-        } else if (hasExternalUrl) {
-          const ogpThumb = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
-          return `<a href="${url}" target="_blank" rel="noopener" class="featured-card" style="text-decoration:none;display:block;">
-            <div class="featured-thumbnail">
-              <img src="${ogpThumb}" alt="${w.title || ''}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-              <div class="featured-thumbnail-fallback" style="display:none;">LINK ↗</div>
-            </div>
-            <div class="featured-meta">
-              <p class="featured-meta-title">${w.title || ''} <span class="ext-badge">↗</span></p>
-              <p class="featured-meta-role">${w.role || ''}</p>
-            </div>
-          </a>`;
         }
         return '';
       }).join('');
+
       observeFadeIns();
-    } catch (e) {
-      document.getElementById('featuredGrid').innerHTML =
-        '<p class="error-msg">データの読み込みに失敗しました。</p>';
+    } catch(e) {
+      document.getElementById('featuredGrid').innerHTML = '<p class="error-msg">データの読み込みに失敗しました。</p>';
     }
   }
 
   loadData();
   observeFadeIns();
-</script>
-<button class="page-top-btn" id="pageTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="ページトップへ">↑</button>
-<script>
-  const pageTopBtn = document.getElementById('pageTopBtn');
+
   window.addEventListener('scroll', () => {
-    pageTopBtn.classList.toggle('visible', window.scrollY > 300);
+    document.getElementById('pageTopBtn').classList.toggle('visible', window.scrollY > 300);
   });
 </script>
 </body>
