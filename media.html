@@ -61,6 +61,9 @@
 
   .media-article { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; }
   .media-article-icon { width: 40px; height: 40px; background: var(--teal-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--teal); font-size: 1rem; font-weight: 700; font-family: var(--font-display); }
+  .media-thumbnail { position: relative; padding-bottom: 56.25%; background: var(--teal-light); overflow: hidden; }
+  .media-thumbnail img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .media-card:hover .media-thumbnail img { transform: scale(1.03); }
   .media-article-body { flex: 1; }
   .media-article-source { font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
   .media-article-title { font-family: var(--font-jp); font-size: 0.9rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
@@ -212,7 +215,25 @@
         const isVideo = (m.type || '').toLowerCase() === 'video' || youtubeId;
         const delay = `transition-delay:${(i % 6) * 0.08}s`;
 
-        if (isVideo && youtubeId) {
+        const thumbnailUrl = (m.thumbnail_url || '').trim();
+
+        if (thumbnailUrl) {
+          // サムネイル画像あり
+          const inner = `
+            <div class="media-thumbnail">
+              <img src="${thumbnailUrl}" alt="${m.title||''}" loading="lazy" onerror="this.style.display='none';">
+            </div>
+            <div class="media-meta">
+              <p class="media-meta-source">${m.media || ''}</p>
+              <p class="media-meta-title">${m.title || ''}</p>
+              <p class="media-meta-date">${m.date || ''}</p>
+            </div>`;
+          if (m.url) {
+            return `<a href="${m.url}" target="_blank" rel="noopener" class="media-card fade-in" style="${delay}">${inner}</a>`;
+          } else {
+            return `<div class="media-card fade-in" style="${delay}">${inner}</div>`;
+          }
+        } else if (isVideo && youtubeId) {
           return `<div class="media-card fade-in" style="${delay}">
             <div class="media-embed" onclick="loadMediaVideo(this, '${youtubeId}')">
               <img class="media-embed-thumb" src="https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg" alt="${m.title||''}" loading="lazy">
