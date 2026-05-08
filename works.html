@@ -59,6 +59,8 @@
   .work-play-btn::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 4px; }
   .work-embed:hover .work-play-btn { background: var(--teal); transform: translate(-50%, -50%) scale(1.1); }
   .work-card-meta { padding: 1rem 1.2rem; border-top: 2px solid var(--teal-light); }
+  .work-card-meta-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem; }
+  .work-card-badge { font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); background: var(--teal-light); padding: 0.2rem 0.6rem; white-space: nowrap; }
   .work-card-year { font-family: var(--font-display); font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
   .work-card-title { font-family: var(--font-jp); font-size: 0.95rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
   .work-card-role { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
@@ -185,20 +187,8 @@
   }
 
   function typeToKey(type) {
-    const t = (type || '').toLowerCase();
-    if (t.includes('music') || t.includes('mv')) return 'mv';
-    if (t.includes('experimental')) return 'experimental';
-    if (t.includes('film') || t.includes('movie')) return 'film';
-    if (t.includes('game')) return 'game';
-    if (t.includes('netflix')) return 'netflix';
-    if (t.includes('web')) return 'web';
-    return 'tv';
+    return (type || '').trim();
   }
-
-  const typeLabels = {
-    tv: 'TV Anime', mv: 'Music Video', experimental: 'Experimental',
-    film: 'Film', game: 'Game', netflix: 'Netflix', web: 'Web'
-  };
 
   let allWorks = [];
   let currentCat = 'all';
@@ -223,7 +213,10 @@
           <div class="work-thumbnail-fallback" style="display:none;">NO IMAGE</div>
         </div>
         <div class="work-card-meta">
-          <p class="work-card-year">${w.year || ''}</p>
+          <div class="work-card-meta-header">
+            <p class="work-card-year">${w.year || ''}</p>
+            <span class="work-card-badge">${w.type || ''}</span>
+          </div>
           <p class="work-card-title">${w.title || ''}${url ? ' <span class="ext-badge">↗</span>' : ''}</p>
           <p class="work-card-role">${w.role || ''}</p>
         </div>`;
@@ -240,7 +233,10 @@
           <div class="work-play-btn"></div>
         </div>
         <div class="work-card-meta">
-          <p class="work-card-year">${w.year || ''}</p>
+          <div class="work-card-meta-header">
+            <p class="work-card-year">${w.year || ''}</p>
+            <span class="work-card-badge">${w.type || ''}</span>
+          </div>
           <p class="work-card-title">${w.title || ''}</p>
           <p class="work-card-role">${w.role || ''}</p>
         </div>
@@ -254,7 +250,10 @@
           <div class="work-thumbnail-fallback" style="display:none;">LINK ↗</div>
         </div>
         <div class="work-card-meta">
-          <p class="work-card-year">${w.year || ''}</p>
+          <div class="work-card-meta-header">
+            <p class="work-card-year">${w.year || ''}</p>
+            <span class="work-card-badge">${w.type || ''}</span>
+          </div>
           <p class="work-card-title">${w.title || ''} <span class="ext-badge">↗</span></p>
           <p class="work-card-role">${w.role || ''}</p>
         </div>
@@ -335,7 +334,7 @@
     usedTypes.forEach(key => {
       const btn = document.createElement('button');
       btn.className = 'filter-btn';
-      btn.textContent = typeLabels[key] || key;
+      btn.textContent = key;
       btn.onclick = function() { filterWorks(key, this); };
       filterBar.appendChild(btn);
     });
