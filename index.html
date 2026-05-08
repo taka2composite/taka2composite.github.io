@@ -203,27 +203,6 @@
   .page-top-btn.visible { opacity: 1; pointer-events: auto; }
   .page-top-btn:hover { background: var(--teal-dark); }
 
-  #media { background: var(--off-white); border-top: 1px solid var(--border); }
-  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-  .media-card { background: white; border: 1px solid var(--border); overflow: hidden; transition: all 0.2s; text-decoration: none; display: block; }
-  .media-card:hover { border-color: var(--teal-mid); box-shadow: 0 4px 20px rgba(26,155,161,0.08); transform: translateY(-2px); }
-  .media-embed { position: relative; padding-bottom: 56.25%; background: var(--teal-light); }
-  .media-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-  .media-embed-thumb { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
-  .media-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; background: rgba(26,155,161,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-  .media-play-btn::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 4px; }
-  .media-meta { padding: 1rem 1.2rem; border-top: 2px solid var(--teal-light); }
-  .media-meta-source { font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
-  .media-meta-title { font-family: var(--font-jp); font-size: 0.9rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
-  .media-meta-date { font-family: var(--font-display); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.05em; }
-  .media-article { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; }
-  .media-article-icon { width: 40px; height: 40px; background: var(--teal-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--teal); font-size: 1rem; font-weight: 700; font-family: var(--font-display); }
-  .media-article-body { flex: 1; }
-  .media-article-source { font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.3rem; }
-  .media-article-title { font-family: var(--font-jp); font-size: 0.9rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; line-height: 1.4; }
-  .media-article-date { font-family: var(--font-display); font-size: 0.68rem; color: var(--text-dim); }
-  .media-arrow { margin-left: auto; color: var(--teal); font-size: 1rem; padding-left: 0.5rem; flex-shrink: 0; }
-
   @media (max-width: 768px) {
     nav { padding: 0 1.2rem; height: 52px; }
     .nav-logo { font-size: 0.85rem; letter-spacing: 0.1em; white-space: nowrap; }
@@ -259,7 +238,7 @@
     <li><a href="index.html">Top</a></li>
     <li><a href="works.html">Works</a></li>
     <li><a href="#profile">Profile</a></li>
-    <li><a href="#media">Media</a></li>
+    <li><a href="media.html">Media</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-social">
@@ -436,16 +415,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="media">
-  <div class="container">
-    <p class="section-label">Media</p>
-    <h2 class="section-title">Media & Press</h2>
-    <div class="media-grid" id="mediaGrid">
-      <p class="loading-msg">Loading...</p>
     </div>
   </div>
 </section>
@@ -643,62 +612,7 @@
     }
   }
 
-  const MEDIA_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSTur1uP4etEukILyzdq3QsUZ6_WG8qj0uWqOFBteQavAEkImRhCeaeNkf0VwdlESRTt8hQ5Qz-ZxnH/pub?gid=1499370673&single=true&output=csv';
 
-  function loadMediaVideo(el, id) {
-    el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen allow="autoplay" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>`;
-  }
-
-  async function loadMedia() {
-    try {
-      const res = await fetch(MEDIA_CSV_URL);
-      if (!res.ok) throw new Error('fetch failed');
-      const text = await res.text();
-      const items = parseCSV(text).filter(m => m.title || m.media);
-      const el = document.getElementById('mediaGrid');
-
-      if (!items.length) {
-        el.closest('section').style.display = 'none';
-        return;
-      }
-
-      el.innerHTML = items.map(m => {
-        const youtubeId = getYoutubeId(m.url || '');
-        const isVideo = (m.type || '').toLowerCase() === 'video' || youtubeId;
-
-        if (isVideo && youtubeId) {
-          return `<div class="media-card">
-            <div class="media-embed" onclick="loadMediaVideo(this, '${youtubeId}')" style="cursor:pointer;">
-              <img class="media-embed-thumb" src="https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg" alt="${m.title||''}" loading="lazy">
-              <div class="media-play-btn"></div>
-            </div>
-            <div class="media-meta">
-              <p class="media-meta-source">${m.media || ''}</p>
-              <p class="media-meta-title">${m.title || ''}</p>
-              <p class="media-meta-date">${m.date || ''}</p>
-            </div>
-          </div>`;
-        } else {
-          return `<a href="${m.url || '#'}" target="_blank" rel="noopener" class="media-card">
-            <div class="media-article">
-              <div class="media-article-icon">✎</div>
-              <div class="media-article-body">
-                <p class="media-article-source">${m.media || ''}</p>
-                <p class="media-article-title">${m.title || ''}</p>
-                <p class="media-article-date">${m.date || ''}</p>
-              </div>
-              <span class="media-arrow">↗</span>
-            </div>
-          </a>`;
-        }
-      }).join('');
-    } catch(e) {
-      document.getElementById('mediaGrid').closest('section').style.display = 'none';
-    }
-  }
-
-  loadData();
-  loadMedia();
   observeFadeIns();
 
   window.addEventListener('scroll', () => {
