@@ -130,11 +130,15 @@
   .hero-scroll {
     position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    color: rgba(255,255,255,0.4);
-    font-family: var(--font-display); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
   }
-  .hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-  @keyframes scrollPulse { 0%,100%{opacity:0.3}50%{opacity:1} }
+  .hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, white, transparent); animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.5}50%{opacity:1} }
+
+  .hero-sns { display: flex; gap: 1.2rem; margin-top: 1.5rem; }
+  .hero-sns a { font-family: var(--font-display); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid rgba(255,255,255,0.2); transition: all 0.2s; }
+  .hero-sns a:hover { color: white; border-bottom-color: white; }
 
   /* SECTIONS */
   section { padding: 7rem 2rem; }
@@ -307,6 +311,11 @@
       <div class="hero-cta">
         <a href="works.html" class="btn btn-white">View Works</a>
         <a href="#contact" class="btn btn-outline-white">Contact</a>
+      </div>
+      <div class="hero-sns">
+        <a href="https://note.com/taka2composite" target="_blank">Note</a>
+        <a href="https://twitter.com/J_Taka2" target="_blank">Twitter / X</a>
+        <a href="https://www.facebook.com/junpei.takatsu" target="_blank">Facebook</a>
       </div>
     </div>
   </div>
