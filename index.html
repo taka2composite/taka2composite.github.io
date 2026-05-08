@@ -181,7 +181,10 @@
   .timeline-content p { font-family: var(--font-jp); font-size: 0.83rem; color: var(--text-muted); line-height: 1.9; }
 
   /* CONTACT */
-  #contact { background: var(--teal); text-align: center; }
+  #contact { background: var(--teal); text-align: center; position: relative; overflow: hidden; }
+  .contact-pattern { position: absolute; inset: 0; opacity: 0.08; pointer-events: none; }
+  .contact-pattern svg { width: 100%; height: 100%; }
+  .contact-inner { position: relative; z-index: 1; }
   .contact-label { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; justify-content: center; }
   .contact-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; color: white; margin-bottom: 2rem; letter-spacing: 0.05em; }
   .contact-text { font-family: var(--font-jp); font-size: 0.9rem; color: rgba(255,255,255,0.7); max-width: 500px; margin: 0 auto 2rem; line-height: 2; }
@@ -416,6 +419,46 @@
 </section>
 
 <section id="contact">
+  <div class="contact-pattern">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <symbol id="ae_c" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="white" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Helvetica">Ae</text></symbol>
+        <symbol id="ps_c" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="3" fill="none" stroke="white" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Helvetica">Ps</text></symbol>
+        <symbol id="note_c" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="10" fill="none" stroke="white" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="11" font-weight="700" font-family="Helvetica">n</text></symbol>
+        <symbol id="layers_c" viewBox="0 0 24 24"><path d="M12 2 L22 7 L12 12 L2 7 Z" fill="none" stroke="white" stroke-width="1.5"/><path d="M2 12 L12 17 L22 12" fill="none" stroke="white" stroke-width="1.5"/><path d="M2 17 L12 22 L22 17" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+        <symbol id="film_c" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="white" stroke-width="1.5"/><rect x="2" y="7" width="3" height="2" fill="white"/><rect x="2" y="11" width="3" height="2" fill="white"/><rect x="2" y="15" width="3" height="2" fill="white"/><rect x="19" y="7" width="3" height="2" fill="white"/><rect x="19" y="11" width="3" height="2" fill="white"/><rect x="19" y="15" width="3" height="2" fill="white"/></symbol>
+        <symbol id="star_c" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+        <symbol id="cursor_c" viewBox="0 0 24 24"><path d="M4 4 L4 18 L8 14 L11 20 L13 19 L10 13 L15 13 Z" fill="none" stroke="white" stroke-width="1.5"/></symbol>
+      </defs>
+      <use href="#ae_c" x="30" y="20" width="32" height="32"/>
+      <use href="#note_c" x="120" y="40" width="26" height="26"/>
+      <use href="#ps_c" x="210" y="15" width="28" height="28"/>
+      <use href="#film_c" x="310" y="35" width="30" height="30"/>
+      <use href="#layers_c" x="400" y="18" width="26" height="26"/>
+      <use href="#star_c" x="490" y="38" width="24" height="24"/>
+      <use href="#ae_c" x="580" y="15" width="32" height="32"/>
+      <use href="#cursor_c" x="670" y="35" width="24" height="24"/>
+      <use href="#note_c" x="760" y="18" width="28" height="28"/>
+      <use href="#ps_c" x="850" y="38" width="26" height="26"/>
+      <use href="#film_c" x="940" y="15" width="30" height="30"/>
+      <use href="#layers_c" x="1030" y="35" width="26" height="26"/>
+      <use href="#star_c" x="1120" y="18" width="28" height="28"/>
+      <use href="#cursor_c" x="20" y="320" width="26" height="26"/>
+      <use href="#ae_c" x="110" y="340" width="28" height="28"/>
+      <use href="#note_c" x="210" y="320" width="30" height="30"/>
+      <use href="#ps_c" x="310" y="342" width="24" height="24"/>
+      <use href="#star_c" x="400" y="320" width="28" height="28"/>
+      <use href="#film_c" x="490" y="340" width="26" height="26"/>
+      <use href="#layers_c" x="590" y="320" width="30" height="30"/>
+      <use href="#ae_c" x="690" y="342" width="24" height="24"/>
+      <use href="#note_c" x="790" y="320" width="28" height="28"/>
+      <use href="#cursor_c" x="880" y="340" width="26" height="26"/>
+      <use href="#ps_c" x="970" y="320" width="30" height="30"/>
+      <use href="#star_c" x="1070" y="342" width="24" height="24"/>
+      <use href="#film_c" x="1150" y="320" width="28" height="28"/>
+    </svg>
+  </div>
+  <div class="contact-inner">
   <div class="container">
     <p class="section-label contact-label" style="justify-content:center;color:rgba(255,255,255,0.5);">Contact</p>
     <h2 class="contact-title">Get in Touch</h2>
@@ -429,6 +472,7 @@
       <a href="https://twitter.com/J_Taka2" target="_blank" class="btn btn-outline-white">X</a>
       <a href="https://www.facebook.com/junpei.takatsu" target="_blank" class="btn btn-outline-white">Facebook</a>
     </div>
+  </div>
   </div>
 </section>
 
